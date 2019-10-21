@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AuthService } from './auth/auth.service';
+import { JwtService } from './auth/jwt/jwt.service';
 import { env } from '../config/env';
-import { IJwtHeader, IJwtPayload } from './auth/auth.interface';
+import { IJwtHeader, IJwtPayload } from './auth/jwt/jwt.interface';
 
 @Injectable()
 export class AppService {
@@ -19,12 +19,12 @@ export class AppService {
 	private readonly bearer: string = env().bearer;
 
 	constructor(
-		private readonly authService: AuthService,
+		private readonly jwtService: JwtService,
 	) {}
 
 	createToken(): string {
 
-		return this.authService.createToken(this.header, this.payload, this.secretKey);
+		return this.jwtService.createToken(this.header, this.payload, this.secretKey);
 	}
 
 	isTokenValid(authParam: string): boolean {
@@ -33,6 +33,6 @@ export class AppService {
 		// 	: 0;
 		const token = authParam.split(' ');
 		console.log(token);
-		return this.authService.isTokenValid(token[1], this.secretKey);
+		return this.jwtService.isTokenValid(token[1], this.secretKey);
 	}
 }
