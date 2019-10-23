@@ -11,8 +11,8 @@ export class AuthMiddleware implements NestMiddleware {
 			next();
 		} else {
 
-			res.redirect('/auth');
 			res.sendStatus(401);
+			res.redirect('/auth');
 		}
 	}
 
