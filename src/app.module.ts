@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import * as dotenv from 'dotenv';
 import { DBConfigService } from './database/db-config';
+import { UserEntity } from './database/entity/user.entity';
 
 dotenv.config();
 
@@ -13,14 +14,9 @@ dotenv.config();
 	imports: [
 		AuthModule,
 		TypeOrmModule.forRoot({
-			type: 'mysql',
-			host: DBConfigService.getDataBaseHost,
-			port: DBConfigService.getDataBasePort,
-			username: DBConfigService.getDataBaseUser,
-			password: DBConfigService.getDataBasePassword,
-			database: DBConfigService.getDataBase,
-			entities: [],
-			synchronize: true,
+			entities: [
+				UserEntity,
+			]
 		}),
 	],
 	controllers: [AppController],
