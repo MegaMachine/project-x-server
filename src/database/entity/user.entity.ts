@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn } from 'typeorm';
 import { IsUUID, Length, IsString } from 'class-validator';
 
-@Entity()
+@Entity('user')
 export class UserEntity {
 
 	// @IsUUID()
@@ -13,7 +13,7 @@ export class UserEntity {
 	@IsString()
 	name: string;
 
-	@Length(45)
+	@Length(200)
 	@IsString()
 	password: string;
 }
