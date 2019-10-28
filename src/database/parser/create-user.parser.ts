@@ -14,7 +14,6 @@ export class CreateUserParser {
 		const salt = '1231231231231231';
 
 		return {
-			id: uuid(),
 			login: user.login,
 			password: this._passwordHash(user.password, salt),
 		};

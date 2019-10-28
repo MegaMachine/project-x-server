@@ -1,19 +1,20 @@
-import { Entity, PrimaryColumn } from 'typeorm';
-import { IsUUID, Length, IsString } from 'class-validator';
+import { Entity, PrimaryColumn, PrimaryGeneratedColumn, BeforeInsert, Column } from 'typeorm';
+import * as uuid from 'uuid';
 
 @Entity('user')
 export class UserEntity {
 
-	// @IsUUID()
-	@IsString()
-	@PrimaryColumn()
+	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Length(45)
-	@IsString()
-	name: string;
+	@Column({ length: 45 })
+	login: string;
 
-	@Length(200)
-	@IsString()
+	@Column({ length: 200 })
 	password: string;
+
+	@BeforeInsert()
+	generateID() {
+		this.id = uuid();
+	}
 }

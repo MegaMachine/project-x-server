@@ -4,7 +4,6 @@ import { UserEntity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 export interface IUser {
-	id: string;
 	login: string;
 	password: string;
 }
@@ -16,12 +15,8 @@ export class DataBaseService {
 		@InjectRepository(UserEntity)
 		private userRepository: Repository<UserEntity>,
 	) {}
+
 	async createUser(user?: IUser) {
-		// user = {
-		// 	id: '00000000-0000-0000-0000',
-		// 	login: 'testlogin',
-		// 	password: 'testpassword',
-		// };
 
 		await getConnection()
 			.createQueryBuilder()
@@ -29,14 +24,13 @@ export class DataBaseService {
 			.into('user')
 			.values([user])
 			.execute();
-	};
+	}
 
 	async getUserByLogin(login: string) {
 
-		return await getConnection()
-			.createQueryBuilder()
+		return await this.userRepository
+			.createQueryBuilder('user')
 			.select()
-			.from('UserEntity', 'user')
 			.where('user.login = :value', { value: login })
 			.getOne();
 	}

@@ -36,7 +36,7 @@ export class AuthController {
 		@Body() user: AuthUserDto,
 	) {
 
-		await this.authService.singUp(user as IUser);
+		await this.authService.singUp(user);
 	}
 
 	@Post('/sing-in')
@@ -44,6 +44,6 @@ export class AuthController {
 		@Body() user: AuthUserDto,
 	) {
 
-		await this.authService.singIn(user as IUser);
+		await this.authService.singIn(user);
 	}
 }

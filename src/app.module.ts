@@ -7,17 +7,23 @@ import { AuthMiddleware } from './middleware/auth.middleware';
 import * as dotenv from 'dotenv';
 import { DBConfigService } from './database/db-config';
 import { UserEntity } from './database/entity/user.entity';
+import { OtherModule } from './other/other.module';
+import { OrmConfigService } from './other/orm-config.service';
+import { DataBaseModule } from './database/database.module';
 
 dotenv.config();
 
 @Module({
 	imports: [
-		AuthModule,
-		TypeOrmModule.forRoot({
-			entities: [
-				UserEntity,
-			]
+		TypeOrmModule.forRootAsync({
+			imports: [OtherModule],
+			useFactory: (ormConfigService: OrmConfigService) => {
+				return ormConfigService.getOrmConfig()
+			},
+			inject: [OrmConfigService],
 		}),
+		DataBaseModule,
+		AuthModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

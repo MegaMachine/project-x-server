@@ -11,7 +11,7 @@ export class AuthService {
 		private createUserParser: CreateUserParser,
 	) { }
 
-	async singUp(user: AuthUserDto) {
+	async singUp(user: IUser) {
 
 		try {
 			await this.dataBaseService.createUser(
@@ -26,8 +26,16 @@ export class AuthService {
 		}
 	}
 
-	async singIn(user: AuthUserDto) {
+	async singIn(user: IUser) {
+		const receivedUser: IUser = await this.dataBaseService.getUserByLogin(user.login);
 
-		console.log(this.dataBaseService.getUserByLogin(user.login));
+		if (receivedUser) {
+			
+			this.createUserParser.verifyPassword(user.password, receivedUser.password)
+				? console.log('Password is correct')
+				: console.log('Password incorrect');
+		} else {
+			console.log('huinya')
+		}
 	}
 }
