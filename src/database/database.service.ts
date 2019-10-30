@@ -4,6 +4,7 @@ import { UserEntity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 export interface IUser {
+	id?: string;
 	login: string;
 	password: string;
 }

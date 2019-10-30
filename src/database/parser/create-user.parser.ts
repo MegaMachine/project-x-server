@@ -28,7 +28,8 @@ export class CreateUserParser {
 	}
 
 	verifyPassword(passwordExternal: string, passwordInternal: string): boolean {
-		const passwordInternalParse: IUserPassword = JSON.parse(passwordInternal);
+		const utfPasswordInternalParse = Buffer.from(passwordInternal, 'hex').toString('utf8');
+		const passwordInternalParse: IUserPassword = JSON.parse(utfPasswordInternalParse);
 
 		const salt = passwordInternalParse.salt;
 		const passwordInternalHash = passwordInternalParse.passwordHash;
@@ -43,10 +44,13 @@ export class CreateUserParser {
 	}
 
 	private _passwordHash(password: string, salt: string): string {
-
-		return JSON.stringify({
+		const passwordHash = JSON.stringify({
 			salt,
 			passwordHash: this._sha512(password, salt),
 		});
+
+		const hexedPasswordHash = Buffer.from(passwordHash, 'utf8').toString('hex');
+
+		return hexedPasswordHash;
 	}
 }

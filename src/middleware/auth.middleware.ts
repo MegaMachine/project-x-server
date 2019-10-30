@@ -11,20 +11,8 @@ export class AuthMiddleware implements NestMiddleware {
 			next();
 		} else {
 
+			// res.redirect('http://localhost:3000/auth/sign-in');
 			res.sendStatus(401);
-			res.redirect('/auth');
 		}
 	}
-
-	// private _checkAuth(req: Request, res: Response, next: Function) {
-
-	// 	if (req.headers.authorization) {
-
-	// 		next();
-	// 	} else {
-
-	// 		res.sendStatus(401);
-	// 		res.redirect('/auth');
-	// 	}
-	// }
 }

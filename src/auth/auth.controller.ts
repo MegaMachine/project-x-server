@@ -35,7 +35,6 @@ export class AuthController {
 	async createUser(
 		@Body() user: AuthUserDto,
 	) {
-
 		await this.authService.singUp(user);
 	}
 
@@ -43,7 +42,6 @@ export class AuthController {
 	async loginUser(
 		@Body() user: AuthUserDto,
 	) {
-
-		await this.authService.singIn(user);
+		return await this.authService.singIn(user);
 	}
 }

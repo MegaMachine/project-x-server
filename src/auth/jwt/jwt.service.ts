@@ -26,16 +26,20 @@ export class JwtService {
 	}
 
 	isTokenValid(externalJwt: string, secretKey: string): boolean {
-		const stringifyJwt = Buffer.from(externalJwt, 'hex').toString('utf8');
-		const internalJwt: IJwt = JSON.parse(stringifyJwt);
-		const decryptPayload = this._getDecrypt(internalJwt.payload, secretKey);
-		const stringifyHeader = JSON.stringify(internalJwt.header);
+		try {
+			const stringifyJwt = Buffer.from(externalJwt, 'hex').toString('utf8');
+			const internalJwt: IJwt = JSON.parse(stringifyJwt);
+			const decryptPayload = this._getDecrypt(internalJwt.payload, secretKey);
+			const stringifyHeader = JSON.stringify(internalJwt.header);
 
-		const createdUnSignToken = this._createUnSingToken(stringifyHeader, decryptPayload, internalJwt.header.alg);
-		const decryptedUnSignToken = this._getDecrypt(internalJwt.signature, secretKey);
+			const createdUnSignToken = this._createUnSingToken(stringifyHeader, decryptPayload, internalJwt.header.alg);
+			const decryptedUnSignToken = this._getDecrypt(internalJwt.signature, secretKey);
 
-		if (createdUnSignToken === decryptedUnSignToken) {
-			return true;
+			if (createdUnSignToken === decryptedUnSignToken) {
+				return true;
+			}
+		} catch(err) {
+			console.log(err[`message`]);
 		}
 
 		return false;
