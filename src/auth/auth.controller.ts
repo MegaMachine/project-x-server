@@ -31,17 +31,23 @@ export class AuthController {
 
 	// Develop
 
-	@Post('/sing-up')
+	@Post('/sign-up')
 	async createUser(
 		@Body() user: AuthUserDto,
+		@Res() res: Response,
 	) {
-		await this.authService.singUp(user);
+		const result = await this.authService.signUp(user);
+
+		if (result === 'sign-in') {
+			res.redirect(307, 'http://localhost:3000/auth/sign-in');
+		}
 	}
 
-	@Post('/sing-in')
+	@Post('/sign-in')
 	async loginUser(
 		@Body() user: AuthUserDto,
 	) {
-		return await this.authService.singIn(user);
+		console.log('Sign in user: ', user);
+		return await this.authService.signIn(user);
 	}
 }

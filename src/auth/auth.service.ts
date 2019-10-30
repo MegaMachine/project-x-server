@@ -14,22 +14,23 @@ export class AuthService {
 		private jwtService: JwtService,
 	) { }
 
-	async singUp(user: IUser) {
-		console.log(this.createUserParser.parse(user).password.length)
+	async signUp(user: IUser) {
 		try {
 			await this.dataBaseService.createUser(
 				this.createUserParser.parse(user),
 			);
 		} catch (err) {
-			console.log(err[`message`])
-			// if (err[`message`].indexOf('login_UNIQUE') !== -1) {
-
-			// 	return 'This login is busy.';
-			// }
+			if (err[`message`].indexOf('login_UNIQUE') !== -1) {
+				// console.log(err[`message`]);
+				return 'sign-in';
+			}
+			if (err[`message`].indexOf('DATA_TOO_LONG') !== -1) {
+				console.log(err[`message`] + `. Length is: ${this.createUserParser.parse(user).password.length}`);
+			}
 		}
 	}
 
-	async singIn(user: IUser) {
+	async signIn(user: IUser) {
 		const receivedUser: IUser = await this.dataBaseService.getUserByLogin(user.login);
 
 		if (receivedUser) {
