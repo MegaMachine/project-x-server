@@ -7,7 +7,7 @@ import { env } from '../../../config/env';
 export class JwtService {
 	private readonly iv: string = '1234567812345678';
 
-	createToken(header: IJwtHeader, payload: IJwtPayload, secretKey: string ): string {
+	createToken(header: IJwtHeader, payload: IJwtPayload, secretKey: string ): {token: string} {
 		const stringifyHeader = JSON.stringify(header);
 		const stringifyPayload = JSON.stringify(payload);
 
@@ -21,8 +21,10 @@ export class JwtService {
 		const stringifyJwt = JSON.stringify(jwt);
 		const hexJwt = Buffer.from(stringifyJwt, 'utf8')
 			.toString('hex');
-
-		return hexJwt;
+		console.log('token');
+		console.log(stringifyJwt);
+		console.log(hexJwt);
+		return {token: hexJwt};
 	}
 
 	isTokenValid(externalJwt: string, secretKey: string): boolean {

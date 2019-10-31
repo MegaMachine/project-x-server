@@ -19,13 +19,18 @@ export class AuthService {
 			await this.dataBaseService.createUser(
 				this.createUserParser.parse(user),
 			);
+
+			return { status: true, data: 'user was created'};
 		} catch (err) {
 			if (err[`message`].indexOf('login_UNIQUE') !== -1) {
-				// console.log(err[`message`]);
-				return 'sign-in';
+				console.log(err[`message`]);
+
+				return { status: false, data: 'this login exists'};
 			}
 			if (err[`message`].indexOf('DATA_TOO_LONG') !== -1) {
 				console.log(err[`message`] + `. Length is: ${this.createUserParser.parse(user).password.length}`);
+
+				return { status: false, data: 'long password'};
 			}
 		}
 	}
@@ -46,14 +51,16 @@ export class AuthService {
 
 			if (this.createUserParser.verifyPassword(user.password, receivedUser.password)) {
 				console.log('Password correct');
-				return this.jwtService.createToken(jwtHeader, jwtPayload, env().secret);
+
+				return {status: true, data : this.jwtService.createToken(jwtHeader, jwtPayload, env().secret)};
 			} else {
+
 				console.log('Password incorrect');
-				return 'This password is incorrect.';
+				return { status: false, data: 'password or login incorrect'};
 			}
 
 		} else {
-			console.log('huinya')
+			return { status: false, data: 'user not found'};
 		}
 	}
 }

@@ -22,7 +22,7 @@ export class AppService {
 		private readonly jwtService: JwtService,
 	) {}
 
-	createToken(): string {
+	createToken(): {token: string} {
 
 		return this.jwtService.createToken(this.header, this.payload, this.secretKey);
 	}

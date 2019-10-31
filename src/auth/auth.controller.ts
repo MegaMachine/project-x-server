@@ -11,36 +11,12 @@ export class AuthController {
 		private authService: AuthService,
 	) {}
 
-	@Get()
-	getAuth(
-		@Req() req: Request,
-		@Res() res: Response
-	) {
-		const { login, password} =  req.body;
-		
-		res.contentType('');
-		res.end('');
-	}
-
-	@Post()
-	authUser(
-		@Body() authUserDto: AuthUserDto,
-	) {
-		console.log(authUserDto);
-	}
-
-	// Develop
-
 	@Post('/sign-up')
 	async createUser(
 		@Body() user: AuthUserDto,
-		@Res() res: Response,
 	) {
-		const result = await this.authService.signUp(user);
-
-		if (result === 'sign-in') {
-			res.redirect(307, 'http://localhost:3000/auth/sign-in');
-		}
+		console.log('Sign up user: ', user);
+		return await this.authService.signUp(user);
 	}
 
 	@Post('/sign-in')
@@ -48,6 +24,7 @@ export class AuthController {
 		@Body() user: AuthUserDto,
 	) {
 		console.log('Sign in user: ', user);
+
 		return await this.authService.signIn(user);
 	}
 }
