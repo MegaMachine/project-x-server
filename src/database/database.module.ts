@@ -2,6 +2,7 @@ import { Module } from "@nestjs/common";
 import { DataBaseService } from "./database.service";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from "./entity/user.entity";
+import { CreateUserParser } from "./parser/create-user.parser";
 
 @Module({
 	imports: [
@@ -9,7 +10,8 @@ import { UserEntity } from "./entity/user.entity";
 	],
 	providers: [
 		DataBaseService,
+		CreateUserParser,
 	],
-	exports: [DataBaseService],
+	exports: [DataBaseService, CreateUserParser],
 })
 export class DataBaseModule {}

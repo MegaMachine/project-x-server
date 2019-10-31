@@ -10,6 +10,7 @@ import { UserEntity } from './database/entity/user.entity';
 import { OtherModule } from './other/other.module';
 import { OrmConfigService } from './other/orm-config.service';
 import { DataBaseModule } from './database/database.module';
+import { UserModule } from './user/user.module';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ dotenv.config();
 			inject: [OrmConfigService],
 		}),
 		DataBaseModule,
+		UserModule,
 		AuthModule,
 	],
 	controllers: [AppController],

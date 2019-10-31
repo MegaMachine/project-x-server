@@ -1,4 +1,4 @@
-import { AuthUserDto } from '../../auth/auth-user.dto';
+import { UserDto } from '../../user/user.dto';
 import { IUser } from '../database.service';
 import * as uuid from 'uuid';
 import * as crypto from 'crypto';
@@ -10,7 +10,7 @@ interface IUserPassword {
 
 export class CreateUserParser {
 
-	parse(user: AuthUserDto): IUser {
+	parse(user: UserDto): IUser {
 		const salt = '1231231231231231';
 
 		return {
