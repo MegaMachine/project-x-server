@@ -11,6 +11,7 @@ import { OtherModule } from './other/other.module';
 import { OrmConfigService } from './other/orm-config.service';
 import { DataBaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { UserController } from './user/user.controller';
 
 dotenv.config();
 

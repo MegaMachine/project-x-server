@@ -1,6 +1,7 @@
 import { Controller, Get, Req, Param, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Request } from 'express-serve-static-core';
+import { IResponse } from './interface/responce.interface';
 
 @Controller()
 export class AppController {
@@ -11,11 +12,15 @@ export class AppController {
 	@Get()
 	getHello(
 		@Req() req: Request,
-	): string {
-		const response = this.appService.isTokenValid(req.headers.authorization)
+	): IResponse {
+		const message = this.appService.isTokenValid(req.headers.authorization)
 				? 'welcome'
 				: 'auth pls';
 
-		return response;
+		return {
+			status: true,
+			data: null,
+			message,
+		};
 	}
 }

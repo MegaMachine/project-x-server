@@ -5,9 +5,12 @@ import { Response, Request } from "express";
 export class AuthMiddleware implements NestMiddleware {
 
 	use(req: Request, res: Response, next: Function): void {
-
+		console.log('url: ', req.url);
+		console.log('baseUrl: ', req.baseUrl);
+		console.log('auth: ', req.headers.authorization)
 		if (req.headers.authorization) {
 
+			console.log('auth check')
 			next();
 		} else {
 
