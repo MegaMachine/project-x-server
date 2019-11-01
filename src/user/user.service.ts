@@ -19,7 +19,7 @@ import {
 	IJwtHeader,
 } from '../auth/jwt/jwt.interface';
 import {
-	IResponse,
+	IResponseBody,
 } from 'src/interface/responce.interface';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class UserService {
 		private jwtService: JwtService,
 	) {}
 
-	async signUp(user: IUser): Promise < IResponse > {
+	async signUp(user: IUser): Promise < IResponseBody > {
 
 		try {
 			await this.dataBaseService.createUser(
@@ -67,7 +67,7 @@ export class UserService {
 		}
 	}
 
-	async signIn(user: IUser): Promise < IResponse > {
+	async signIn(user: IUser): Promise < IResponseBody > {
 		const receivedUser: IUser = await this.dataBaseService.getUserByLogin(user.login);
 
 		if (receivedUser) {
@@ -106,5 +106,10 @@ export class UserService {
 				message: 'user not found',
 			};
 		}
+	}
+
+	async getUserInfo(id: string) {
+
+		return await this.dataBaseService.getUserById(id);
 	}
 }

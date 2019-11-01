@@ -28,11 +28,7 @@ export class AppService {
 	}
 
 	isTokenValid(authParam: string): boolean {
-		// const sliceIndex = authParam.lastIndexOf(this.bearer) !== -1
-		// 	? authParam.lastIndexOf(this.bearer) + authParam.length
-		// 	: 0;
-		const token = authParam.split(' ');
-		console.log(token);
-		return this.jwtService.isTokenValid(token[1], this.secretKey);
+
+		return this.jwtService.isTokenValid(authParam, this.secretKey);
 	}
 }

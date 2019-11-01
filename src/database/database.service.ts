@@ -35,4 +35,13 @@ export class DataBaseService {
 			.where('user.login = :value', { value: login })
 			.getOne();
 	}
+
+	async getUserById(id: string) {
+
+		return await this.userRepository.find({
+			where: {
+				id,
+			},
+		});
+	}
 }

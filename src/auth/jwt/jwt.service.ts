@@ -29,7 +29,8 @@ export class JwtService {
 
 	isTokenValid(externalJwt: string, secretKey: string): boolean {
 		try {
-			const stringifyJwt = Buffer.from(externalJwt, 'hex').toString('utf8');
+			const token = externalJwt.split(' ');
+			const stringifyJwt = Buffer.from(token[1], 'hex').toString('utf8');
 			const internalJwt: IJwt = JSON.parse(stringifyJwt);
 			const decryptPayload = this._getDecrypt(internalJwt.payload, secretKey);
 			const stringifyHeader = JSON.stringify(internalJwt.header);
@@ -45,6 +46,16 @@ export class JwtService {
 		}
 
 		return false;
+	}
+
+	getTokenPayload(externalJwt, secretKey) {
+		const token = externalJwt.split(' ');
+		const stringifyJwt = Buffer.from(token[1], 'hex').toString('utf8');
+		const internalJwt: IJwt = JSON.parse(stringifyJwt);
+		const decryptPayload = this._getDecrypt(internalJwt.payload, secretKey);
+		const parsePayload = JSON.parse(decryptPayload);
+
+		return parsePayload;
 	}
 
 	private _getHash(str: string, alg: string): string {
