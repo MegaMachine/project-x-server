@@ -20,7 +20,7 @@ dotenv.config();
 		TypeOrmModule.forRootAsync({
 			imports: [OtherModule],
 			useFactory: (ormConfigService: OrmConfigService) => {
-				return ormConfigService.getOrmConfig()
+				return ormConfigService.getOrmConfig();
 			},
 			inject: [OrmConfigService],
 		}),

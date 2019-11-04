@@ -21,9 +21,7 @@ export class JwtService {
 		const stringifyJwt = JSON.stringify(jwt);
 		const hexJwt = Buffer.from(stringifyJwt, 'utf8')
 			.toString('hex');
-		console.log('token');
-		console.log(stringifyJwt);
-		console.log(hexJwt);
+
 		return {token: hexJwt};
 	}
 
@@ -53,6 +51,7 @@ export class JwtService {
 		const stringifyJwt = Buffer.from(token[1], 'hex').toString('utf8');
 		const internalJwt: IJwt = JSON.parse(stringifyJwt);
 		const decryptPayload = this._getDecrypt(internalJwt.payload, secretKey);
+		console.log(decryptPayload)
 		const parsePayload = JSON.parse(decryptPayload);
 
 		return parsePayload;

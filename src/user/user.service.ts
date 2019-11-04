@@ -77,13 +77,13 @@ export class UserService {
 				typ: 'JWT',
 			};
 			const jwtPayload: IJwtPayload = {
-				id: user.id,
-				name: user.login,
+				id: receivedUser.id,
+				name: receivedUser.login,
 			};
 
 			if (this.createUserParser.verifyPassword(user.password, receivedUser.password)) {
 				console.log('Password correct');
-
+				console.log('Check Bearer', this.jwtService.createToken(jwtHeader, jwtPayload, env().secret))
 				return {
 					status: true,
 					data: this.jwtService.createToken(jwtHeader, jwtPayload, env().secret),

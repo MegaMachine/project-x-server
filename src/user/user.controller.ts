@@ -34,8 +34,10 @@ export class UserController {
 	}
 
 	@Get('/me')
-	getUserInfo(req: IRequest): IResponseBody {
-
+	getUserInfo(
+		@Req() req: IRequest,
+	): IResponseBody {
+		console.log(req.user)
 		return {
 			status: true,
 			data: req.user,

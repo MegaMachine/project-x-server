@@ -37,7 +37,7 @@ export class DataBaseService {
 	}
 
 	async getUserById(id: string) {
-
+		console.log('getUserById', id)
 		return await this.userRepository.find({
 			where: {
 				id,
