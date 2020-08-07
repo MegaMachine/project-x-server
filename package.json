@@ -27,7 +27,7 @@
     "@nestjs/platform-socket.io": "^6.8.5",
     "@nestjs/typeorm": "^6.2.0",
     "@nestjs/websockets": "^6.8.5",
-    "class-transformer": "^0.2.3",
+    "class-transformer": "^0.3.1",
     "class-validator": "^0.10.2",
     "dotenv": "^8.1.0",
     "mssql": "^5.1.0",
